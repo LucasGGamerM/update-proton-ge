@@ -5,7 +5,7 @@
 
 # Update Proton GloriousEggroll script
 A script to update your [Proton GloriousEggroll][proton-ge] installation to the latest
-version, so you don't have to do it yourself.
+version, so you don't have to do it yourself. Also makes a symlink to the latest version.
 
 ## Usage
 Please refer to the Proton GloriousEggroll installation instructions first to
@@ -16,7 +16,7 @@ https://github.com/GloriousEggroll/proton-ge-custom#installation
 To use this script, download it first (and make it executable):
 
 ```bash
-wget https://gitlab.com/timvisee/update-proton-ge/-/raw/master/update-proton-ge
+wget https://gitlab.com/LucasGGamerM/update-proton-ge/-/raw/master/update-proton-ge
 chmod a+x ./update-proton-ge
 ```
 
