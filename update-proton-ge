@@ -50,6 +50,7 @@ if [ -d $install_dir ]; then
     echo Checking symlink...
     make_symlink_to_latest_version
     echo Finished checking Proton-GE-latest symlink integrity successfully.
+
     exit
 fi
 
