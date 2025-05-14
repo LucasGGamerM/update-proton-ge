@@ -18,39 +18,31 @@ echo Found latest version: $version
 
 # Determine download URL and install path
 download_url=https://github.com/GloriousEggroll/proton-ge-custom/releases/download/$version/$version.tar.gz
-install_dir=$PROTON_DIR/$version
-download_file=/tmp/$version.tar.gz
+install_dir=$PROTON_DIR/Proton-GE-latest
+download_file=/tmp/Proton-GE-latest.tar.gz
 
 print_installed() {
     echo Installed versions:
+    if [ -d $PROTON_DIR/Proton-GE-latest ]; then
+        if [ -e $PROTON_DIR/Proton-GE-latest/.version.original ]; then
+            echo "- Proton-GE-Latest -> $(cat $PROTON_DIR/Proton-GE-latest/.version.original | cut -d " " -f 2-)"
+        elif [ -e $PROTON_DIR/Proton-GE-Latest/verion ]; then
+            echo "- Proton-GE-Latest -> $(cat $PROTON_DIR/Proton-GE-latest/version | cut -d " " -f 2-)"
+        fi
+    fi
+
     ls $PROTON_DIR | grep -e "^GE-Proton" | sed "s/^/- /"
 }
 
-make_symlink_to_latest_version() {
-    if [ ! -L $PROTON_DIR/Proton-GE-latest ] && [ -e $PROTON_DIR/Proton-GE-latest ]; then
-        echo Removing existent Proton-GE-latest install...
-        rm -rf $PROTON_DIR/Proton-GE-latest
-    elif cmp -s $PROTON_DIR/Proton-GE-latest/version $PROTON_DIR/$version/version; then
-        echo Version is identical, skipping remaking symlink...
-        return
-    elif [ -L $PROTON_DIR/Proton-GE-latest ]; then
-        echo Removing outdated symlink...
-        rm $PROTON_DIR/Proton-GE-latest
-    fi
-
-    echo Making Proton-GE-latest symlink...
-    ln -s ./$version $PROTON_DIR/Proton-GE-latest
+rename_to_latest_version() {
+    cp $PROTON_DIR/Proton-GE-latest/version $PROTON_DIR/Proton-GE-latest/.version.original
+    sed -i 's/$version/Proton-GE-latest/g' $PROTON_DIR/Proton-GE-latest/version
 }
 
 # Exit if already installed
-if [ -d $install_dir ]; then
+if [ -e $install_dir/.version.original ] && [[ $(cat "$PROTON_DIR/Proton-GE-latest/version" | sed 's/ .*//') == $(cat "$PROTON_DIR/Proton-GE-latest/.version.original" | sed 's/ .*//') ]]; then
     echo Already installed at $install_dir
     print_installed
-
-    echo Checking symlink...
-    make_symlink_to_latest_version
-    echo Finished checking Proton-GE-latest symlink integrity successfully.
-
     exit
 fi
 
@@ -64,7 +56,7 @@ tar -xzf $download_file --directory $PROTON_DIR
 echo Cleanup...
 rm $download_file
 
-make_symlink_to_latest_version
+rename_to_latest_version
 
 echo Installation complete, at $install_dir
 print_installed
