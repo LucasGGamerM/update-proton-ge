@@ -16,7 +16,7 @@ https://github.com/GloriousEggroll/proton-ge-custom#installation
 To use this script, download it first (and make it executable):
 
 ```bash
-wget [https://github.com/LucasGGamerM/update-proton-ge/-/raw/master/update-proton-ge](https://raw.githubusercontent.com/LucasGGamerM/update-proton-ge/refs/heads/master/update-proton-ge)
+wget https://raw.githubusercontent.com/LucasGGamerM/update-proton-ge/refs/heads/master/update-proton-ge
 chmod a+x ./update-proton-ge
 ```
 
