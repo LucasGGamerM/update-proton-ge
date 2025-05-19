@@ -35,7 +35,9 @@ print_installed() {
 }
 
 rename_to_latest_version() {
-    cp $PROTON_DIR/Proton-GE-latest/version $PROTON_DIR/Proton-GE-latest/.version.original
+    if [ ! $(cat $PROTON_DIR/Proton-GE-latest/.version | cut -d " " -f 2-) == Proton-GE-latest ]; then
+         cp $PROTON_DIR/Proton-GE-latest/version $PROTON_DIR/Proton-GE-latest/.version.original
+    fi
     sed -i 's/'"$version"'/Proton-GE-latest/g' $PROTON_DIR/Proton-GE-latest/version
     sed -i 's/'"$version"'/Proton-GE-latest/g' $PROTON_DIR/Proton-GE-latest/compatibilitytool.vdf
 
