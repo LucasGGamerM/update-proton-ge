@@ -36,11 +36,13 @@ print_installed() {
 
 rename_to_latest_version() {
     cp $PROTON_DIR/Proton-GE-latest/version $PROTON_DIR/Proton-GE-latest/.version.original
-    sed -i 's/$version/Proton-GE-latest/g' $PROTON_DIR/Proton-GE-latest/version
+    sed -i 's/'"$version"'/Proton-GE-latest/g' $PROTON_DIR/Proton-GE-latest/version
+    sed -i 's/'"$version"'/Proton-GE-latest/g' $PROTON_DIR/Proton-GE-latest/compatibilitytool.vdf
+
 }
 
 # Exit if already installed
-if [ -e $install_dir/.version.original ] && [[ $(cat "$PROTON_DIR/Proton-GE-latest/version" | sed 's/ .*//') == $(cat "$PROTON_DIR/Proton-GE-latest/.version.original" | sed 's/ .*//') ]]; then
+if [ -e $install_dir/.version.original ] && [[ $(cat "$PROTON_DIR/Proton-GE-latest/version" | sed 's/ .*//') == $(cat "$PROTON_DIR/Proton-GE-latest/.version.original" | sed 's/ .*//') && $(cat $PROTON_DIR/Proton-GE-latest/.version.original | cut -d " " -f 2-) == $version ]]; then
     echo Already installed at $install_dir
     print_installed
     exit
