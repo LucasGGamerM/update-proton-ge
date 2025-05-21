@@ -35,7 +35,17 @@ print_installed() {
 }
 
 rename_to_latest_version() {
-    if [ ! $(cat $PROTON_DIR/Proton-GE-latest/.version | cut -d " " -f 2-) == Proton-GE-latest ]; then
+    if [ -d $PROTON_DIR/Proton-GE-latest ]; then
+        echo "Moving old version to $(cat $PROTON_DIR/Proton-GE-latest/.version.original | cut -d " " -f 2-)"
+        sed -i 's/Proton-GE-latest/'"$(cat $PROTON_DIR/Proton-GE-latest/.version.original | cut -d " " -f 2-)"'/g' $PROTON_DIR/Proton-GE-latest/version
+        sed -i 's/Proton-GE-latest/'"$(cat $PROTON_DIR/Proton-GE-latest/.version.original | cut -d " " -f 2-)"'/g' $PROTON_DIR/Proton-GE-latest/compatibilitytool.vdf
+        mv $PROTON_DIR/Proton-GE-latest $(cat $PROTON_DIR/Proton-GE-latest/.version.original | cut -d " " -f 2-)
+    fi
+
+    if [ -d $PROTON_DIR/$version ]; then
+        mv $PROTON_DIR/$version $PROTON_DIR/Proton-GE-latest
+    fi
+    if [ ! $(cat $PROTON_DIR/Proton-GE-latest/version | cut -d " " -f 2-) == Proton-GE-latest ]; then
          cp $PROTON_DIR/Proton-GE-latest/version $PROTON_DIR/Proton-GE-latest/.version.original
     fi
     sed -i 's/'"$version"'/Proton-GE-latest/g' $PROTON_DIR/Proton-GE-latest/version
