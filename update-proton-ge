@@ -26,7 +26,7 @@ print_installed() {
     if [ -d $PROTON_DIR/Proton-GE-latest ]; then
         if [ -e $PROTON_DIR/Proton-GE-latest/.version.original ]; then
             echo "- Proton-GE-Latest -> $(cat $PROTON_DIR/Proton-GE-latest/.version.original | cut -d " " -f 2-)"
-        elif [ -e $PROTON_DIR/Proton-GE-Latest/verion ]; then
+        elif [ -e $PROTON_DIR/Proton-GE-Latest/version ]; then
             echo "- Proton-GE-Latest -> $(cat $PROTON_DIR/Proton-GE-latest/version | cut -d " " -f 2-)"
         fi
     fi
