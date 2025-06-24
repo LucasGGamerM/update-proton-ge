@@ -39,7 +39,7 @@ rename_to_latest_version() {
         echo "Moving old version to $(cat $PROTON_DIR/Proton-GE-latest/.version.original | cut -d " " -f 2-)"
         sed -i 's/Proton-GE-latest/'"$(cat $PROTON_DIR/Proton-GE-latest/.version.original | cut -d " " -f 2-)"'/g' $PROTON_DIR/Proton-GE-latest/version
         sed -i 's/Proton-GE-latest/'"$(cat $PROTON_DIR/Proton-GE-latest/.version.original | cut -d " " -f 2-)"'/g' $PROTON_DIR/Proton-GE-latest/compatibilitytool.vdf
-        mv $PROTON_DIR/Proton-GE-latest $(cat $PROTON_DIR/Proton-GE-latest/.version.original | cut -d " " -f 2-)
+        mv $PROTON_DIR/Proton-GE-latest $PROTON_DIR/$(cat $PROTON_DIR/Proton-GE-latest/.version.original | cut -d " " -f 2-)
     fi
 
     if [ -d $PROTON_DIR/$version ]; then
